@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT Master Pass - คลังความรู้ทบทวนสอบใบประกอบวิชาชีพกายภาพบำบัด 600 หัวข้อ</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        harmony: {
+                            blue: '#007DFF',
+                            purple: '#6B5AED',
+                            cyan: '#00C8D7',
+                            emerald: '#00C853',
+                            orange: '#FF7D00',
+                            rose: '#FF2D55',
+                            bgLight: '#F3F5F9',
+                            cardLight: 'rgba(255, 255, 255, 0.82)',
+                            darkBg: '#0B0F17',
+                            darkCard: 'rgba(22, 27, 34, 0.85)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Sarabun', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome Icons & Sarabun Font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Custom Glassmorphism Styles -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .dark .glass-panel {
+            background: rgba(22, 27, 34, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-pill {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 9999px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #007DFF 0%, #6B5AED 50%, #00C8D7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-harmony-bgLight dark:bg-harmony-darkBg text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <header class="sticky top-0 z-40 glass-panel shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-harmony-blue to-harmony-cyan flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                    <i class="fa-solid font-bold text-xl fa-user-doctor"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight tracking-tight gradient-text">PT MASTER PASS</h1>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">สภากายภาพบำบัด & International PT Standards</p>
+                </div>
+            </div>
+
+            <!-- Header Controls -->
+        <div class="flex items-center space-x-2 sm:space-x-4">
+            <div class="relative hidden sm:block w-64">
+                <input type="text" id="globalSearchInput" onkeyup="handleGlobalSearch()" placeholder="ค้นหาบทเรียน, โรค, Special Test..." class="w-full pl-9 pr-4 py-1.5 text-xs rounded-full glass-pill focus:outline-none focus:ring-2 focus:ring-harmony-blue text-slate-800 dark:text-slate-100 placeholder-slate-400">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i>
+            </div>
+
+            <button onclick="toggleDarkMode()" title="เปลี่ยนธีม" class="p-2 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                <i class="fa-solid fa-moon dark:hidden text-slate-600"></i>
+                <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+            </button>
+
+            <button onclick="openSheetModal()" title="ตั้งค่าเชื่อมต่อ Google Apps Script" class="p-2 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-harmony-blue transition relative">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span id="syncIndicator" class="absolute top-0 right-0 w-2.5 h-2.5 bg-slate-400 rounded-full border-2 border-white dark:border-slate-800"></span>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Alert Banner เมื่อยังไม่ได้ตั้งค่า หรือต้องการแจ้งสถานะ API -->
+<div id="apiStatusBanner" class="bg-amber-500/10 border-b border-amber-500/20 px-4 py-2 text-xs text-amber-700 dark:text-amber-300 text-center flex items-center justify-center gap-2">
+    <i class="fa-solid fa-circle-info"></i>
+    <span>ระบบกำลังทำงานในโหมด Local Standalone (พร้อม 600 หัวข้อ) หากต้องการซิงค์ประวัติไปยัง Google Sheet ให้คลิกปุ่มรูปก้อนเมฆ <i class="fa-solid fa-cloud-arrow-up text-harmony-blue"></i> ด้านบน</span>
+    <button onclick="document.getElementById('apiStatusBanner').remove()" class="ml-2 font-bold hover:underline">ปิด</button>
+</div>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- Mobile Search -->
+        <div class="sm:hidden mb-4">
+            <div class="relative w-full">
+                <input type="text" id="globalSearchInputMobile" onkeyup="handleGlobalSearchMobile()" placeholder="ค้นหาบทเรียนทบทวน..." class="w-full pl-9 pr-4 py-2 text-sm rounded-xl glass-pill focus:outline-none focus:ring-2 focus:ring-harmony-blue text-slate-800 dark:text-slate-100 placeholder-slate-400">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400"></i>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <section id="dashboardView" class="space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-harmony-blue via-harmony-purple to-harmony-cyan text-white p-6 sm:p-8 shadow-xl">
+                <div class="relative z-10 max-w-3xl">
+                    <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold mb-3 tracking-wide">
+                        <i class="fa-solid fa-graduation-cap mr-1"></i> PT License Board Review (600 Topics Core Knowledge)
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">คลังสรุปเนื้อหาทบทวนสอบใบประกอบวิชาชีพกายภาพบำบัด</h2>
+                    <p class="text-sm opacity-90 leading-relaxed font-light mb-4">
+                        เจาะลึก 6 หมวดวิชาหลัก หมวดละ 100 หัวข้อ อ้างอิงสภากายภาพบำบัดและแนวทางสากลล่าสุด เพิ่มความมั่นใจสำหรับการเตรียมสอบ
+                    </p>
+
+                    <!-- Statistics Bar -->
+                    <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-2">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-3 text-center border border-white/20">
+                            <span class="block text-xl sm:text-2xl font-bold" id="totalTopicsCount">600</span>
+                            <span class="text-[10px] sm:text-xs text-white/80">เนื้อหาทั้งหมด</span>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-3 text-center border border-white/20">
+                            <span class="block text-xl sm:text-2xl font-bold" id="readProgressCount">0</span>
+                            <span class="text-[10px] sm:text-xs text-white/80">อ่านแล้ว</span>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-3 text-center border border-white/20">
+                            <span class="block text-xl sm:text-2xl font-bold" id="bookmarkCount">0</span>
+                            <span class="text-[10px] sm:text-xs text-white/80">ติดดาวเน้นย้ำ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Filter Toolbar -->
+            <div class="flex items-center justify-between flex-wrap gap-3 glass-panel p-4 rounded-2xl">
+                <div class="flex items-center space-x-2 overflow-x-auto pb-1 sm:pb-0 text-xs font-medium">
+                    <button onclick="filterByTag('all')" class="px-3 py-1.5 rounded-full bg-harmony-blue text-white shadow">ทั้งหมด</button>
+                    <button onclick="filterByTag('high-yield')" class="px-3 py-1.5 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200">🔥 High Yield (เน้นสอบ)</button>
+                    <button onclick="filterByTag('clinical')" class="px-3 py-1.5 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200">🏥 Clinical Practice</button>
+                    <button onclick="filterByTag('red-flags')" class="px-3 py-1.5 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200">🚨 Red Flags</button>
+                </div>
+                <button onclick="openFlashcardModal()" class="px-3 py-1.5 rounded-xl bg-harmony-purple text-white hover:opacity-90 text-xs font-medium transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-clone"></i> Flashcards ทบทวนไว
+                </button>
+            </div>
+
+            <!-- Categories Grid -->
+            <div>
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-harmony-blue"></i> 
+                    หมวดวิชาหลัก 6 หมวด (หมวดละ 100 เรื่อง)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="categoryCardsGrid">
+                    <!-- Dynamic Render JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORY DETAIL VIEW -->
+        <section id="categoryDetailView" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="switchTab('dashboard')" class="flex items-center space-x-2 text-sm font-semibold text-harmony-blue hover:underline">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>กลับสู่หน้าหลัก</span>
+                </button>
+                <span id="currentCategoryBadge" class="text-xs px-3 py-1 rounded-full font-semibold bg-harmony-blue/10 text-harmony-blue border border-harmony-blue/20">
+                    Category Name
+                </span>
+            </div>
+
+            <div id="categoryHeaderBanner" class="p-6 rounded-3xl glass-panel relative overflow-hidden shadow-lg"></div>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-between items-center bg-slate-100 dark:bg-slate-800/50 p-3 rounded-2xl">
+                <div class="relative w-full sm:w-80">
+                    <input type="text" id="topicFilterInput" onkeyup="renderCategoryTopics()" placeholder="ค้นหาเรื่องในหมวดนี้..." class="w-full pl-9 pr-4 py-2 text-xs rounded-xl glass-pill focus:outline-none focus:ring-2 focus:ring-harmony-blue dark:bg-slate-900/60">
+                    <i class="fa-solid fa-filter absolute left-3 top-3 text-xs text-slate-400"></i>
+                </div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <span>แสดงผล: <strong id="topicCountDisplay" class="text-harmony-blue">0</strong> / 100 หัวข้อ</span>
+                </div>
+            </div>
+
+            <div id="topicsAccordionContainer" class="space-y-4"></div>
+        </section>
+
+    </main>
+
+    <!-- FLASHCARD MODAL -->
+    <div id="flashcardModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-lg w-full rounded-3xl p-6 relative shadow-2xl border border-white/20">
+            <button onclick="closeFlashcardModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-harmony-purple">
+                <i class="fa-solid fa-clone"></i> Flashcards ทบทวนความจำ
+            </h3>
+
+            <div id="flashcardElement" onclick="flipFlashcard()" class="w-full h-64 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer border border-slate-200 dark:border-slate-700 shadow-inner relative transition-transform duration-300">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400" id="flashcardCategoryTag">Category</span>
+                
+                <div class="my-auto">
+                    <p class="text-xs text-harmony-blue font-semibold mb-2" id="flashcardSideLabel">คำถาม / หัวข้อหลัก</p>
+                    <h4 class="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug" id="flashcardTextContent">
+                        กำลังโหลด...
+                    </h4>
+                </div>
+
+                <p class="text-[10px] text-slate-400"><i class="fa-solid fa-hand-pointer mr-1"></i> แตะที่การ์ดเพื่อพลิกดูคำตอบ / สรุปสาระสำคัญ</p>
+            </div>
+
+            <div class="flex items-center justify-between mt-5">
+                <button onclick="prevFlashcard()" class="px-4 py-2 rounded-xl glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold">
+                    <i class="fa-solid fa-chevron-left mr-1"></i> ย้อนกลับ
+                </button>
+                <span class="text-xs font-semibold text-slate-500" id="flashcardProgress">1 / 600</span>
+                <button onclick="nextFlashcard()" class="px-4 py-2 rounded-xl bg-harmony-blue text-white hover:opacity-90 text-xs font-semibold">
+                    ถัดไป <i class="fa-solid fa-chevron-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GOOGLE APPS SCRIPT CONFIG MODAL -->
+    <div id="sheetModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-md w-full rounded-3xl p-6 relative shadow-2xl border border-white/20">
+            <button onclick="closeSheetModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-lg font-bold mb-2 flex items-center gap-2 text-harmony-blue">
+                <i class="fa-solid fa-cloud"></i> Google Sheets Web App Sync
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
+                เชื่อมต่อ Google Apps Script URL เพื่อซิงค์ประวัติการอ่าน และบันทึกย่อช่วยจำไปยัง Google Sheet ของคุณ
+            </p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Apps Script Web App Exec URL</label>
+                    <input type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3 py-2 text-xs rounded-xl glass-pill focus:outline-none focus:ring-2 focus:ring-harmony-blue text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700">
+                </div>
+
+                <div class="flex items-center justify-end space-x-2 pt-2">
+                    <button onclick="saveAppsScriptUrl()" class="px-4 py-2 rounded-xl bg-harmony-blue text-white text-xs font-semibold hover:opacity-90 shadow-md">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> บันทึกการเชื่อมต่อ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --------------------------------------------------------------------------
+           7. GOOGLE APPS SCRIPT BACKEND SYNC (FETCH & POST SAFE HANDLER)
+           -------------------------------------------------------------------------- */
+        function openSheetModal() {
+            document.getElementById('sheetModal').classList.remove('hidden');
+            document.getElementById('scriptUrlInput').value = state.appsScriptUrl;
+        }
+
+        function closeSheetModal() {
+            document.getElementById('sheetModal').classList.add('hidden');
+        }
+
+        function saveAppsScriptUrl() {
+            const url = document.getElementById('scriptUrlInput').value.trim();
+            state.appsScriptUrl = url;
+            localStorage.setItem('pt_apps_script_url', url);
+            updateSyncIndicator();
+            closeSheetModal();
+            syncDataToCloud();
+        }
+
+        function updateSyncIndicator() {
+            const ind = document.getElementById('syncIndicator');
+            if (state.appsScriptUrl) {
+                ind.className = 'absolute top-0 right-0 w-2.5 h-2.5 bg-harmony-emerald rounded-full border-2 border-white dark:border-slate-800';
+            } else {
+                ind.className = 'absolute top-0 right-0 w-2.5 h-2.5 bg-slate-400 rounded-full border-2 border-white dark:border-slate-800';
+            }
+        }
+
+        function syncDataToCloud() {
+            if (!state.appsScriptUrl) return;
+
+            const payload = {
+                timestamp: new Date().toISOString(),
+                readTopics: state.readTopics,
+                bookmarks: state.bookmarks,
+                notes: JSON.parse(localStorage.getItem('pt_notes') || '{}')
+            };
+
+            // ป้องกันปัญหา CORS ด้วยการส่ง payload และจับ error สวยงาม
+            fetch(state.appsScriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(() => {
+                console.log('Synced successfully to Google Sheets');
+            }).catch(err => console.log('Syncing status:', err));
+        }
+    </script>
+</body>
+</html>
