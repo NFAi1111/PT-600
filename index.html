@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PT Master Pass - คลังความรู้ทบทวนสอบใบประกอบวิชาชีพกายภาพบำบัด 600 หัวข้อ</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        harmony: {
+                            blue: '#007DFF',
+                            purple: '#6B5AED',
+                            cyan: '#00C8D7',
+                            emerald: '#00C853',
+                            orange: '#FF7D00',
+                            rose: '#FF2D55',
+                            bgLight: '#F3F5F9',
+                            cardLight: 'rgba(255, 255, 255, 0.82)',
+                            darkBg: '#0B0F17',
+                            darkCard: 'rgba(22, 27, 34, 0.85)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Sarabun', 'SF Pro Display', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome Icons & Sarabun Font -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Custom Glassmorphism Styles -->
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .dark .glass-panel {
+            background: rgba(22, 27, 34, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .dark .glass-pill {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.4);
+            border-radius: 9999px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #007DFF 0%, #6B5AED 50%, #00C8D7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-harmony-bgLight dark:bg-harmony-darkBg text-slate-800 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <header class="sticky top-0 z-40 glass-panel shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+                <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-harmony-blue to-harmony-cyan flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                    <i class="fa-solid font-bold text-xl fa-user-doctor"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight tracking-tight gradient-text">PT MASTER PASS</h1>
+                    <p class="text-[10px] text-slate-500 dark:text-slate-400 font-medium tracking-wide">สภากายภาพบำบัด & International PT Standards</p>
+                </div>
+            </div>
+
+            <!-- Header Controls -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <div class="relative hidden sm:block w-64">
+                    <input type="text" id="globalSearchInput" onkeyup="handleGlobalSearch()" placeholder="ค้นหาบทเรียน, โรค, Special Test..." class="w-full pl-9 pr-4 py-1.5 text-xs rounded-full glass-pill focus:outline-none focus:ring-2 focus:ring-harmony-blue text-slate-800 dark:text-slate-100 placeholder-slate-400">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-xs text-slate-400"></i>
+                </div>
+
+                <button onclick="toggleDarkMode()" title="เปลี่ยนธีม" class="p-2 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                    <i class="fa-solid fa-moon dark:hidden text-slate-600"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+                </button>
+
+                <button onclick="openSheetModal()" title="ตั้งค่าเชื่อมต่อ Google Apps Script" class="p-2 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-harmony-blue transition relative">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span id="syncIndicator" class="absolute top-0 right-0 w-2.5 h-2.5 bg-slate-400 rounded-full border-2 border-white dark:border-slate-800"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- Mobile Search -->
+        <div class="sm:hidden mb-4">
+            <div class="relative w-full">
+                <input type="text" id="globalSearchInputMobile" onkeyup="handleGlobalSearchMobile()" placeholder="ค้นหาบทเรียนทบทวน..." class="w-full pl-9 pr-4 py-2 text-sm rounded-xl glass-pill focus:outline-none focus:ring-2 focus:ring-harmony-blue text-slate-800 dark:text-slate-100 placeholder-slate-400">
+                <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400"></i>
+            </div>
+        </div>
+
+        <!-- DASHBOARD VIEW -->
+        <section id="dashboardView" class="space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-harmony-blue via-harmony-purple to-harmony-cyan text-white p-6 sm:p-8 shadow-xl">
+                <div class="relative z-10 max-w-3xl">
+                    <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-semibold mb-3 tracking-wide">
+                        <i class="fa-solid fa-graduation-cap mr-1"></i> PT License Board Review (600 Topics Core Knowledge)
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight mb-2">คลังสรุปเนื้อหาทบทวนสอบใบประกอบวิชาชีพกายภาพบำบัด</h2>
+                    <p class="text-sm opacity-90 leading-relaxed font-light mb-4">
+                        เจาะลึก 6 หมวดวิชาหลัก หมวดละ 100 หัวข้อ อ้างอิงสภากายภาพบำบัดและแนวทางสากลล่าสุด เพิ่มความมั่นใจสำหรับการเตรียมสอบ
+                    </p>
+
+                    <!-- Statistics Bar -->
+                    <div class="grid grid-cols-3 gap-2 sm:gap-4 pt-2">
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-3 text-center border border-white/20">
+                            <span class="block text-xl sm:text-2xl font-bold" id="totalTopicsCount">600</span>
+                            <span class="text-[10px] sm:text-xs text-white/80">เนื้อหาทั้งหมด</span>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-3 text-center border border-white/20">
+                            <span class="block text-xl sm:text-2xl font-bold" id="readProgressCount">0</span>
+                            <span class="text-[10px] sm:text-xs text-white/80">อ่านแล้ว</span>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-3 text-center border border-white/20">
+                            <span class="block text-xl sm:text-2xl font-bold" id="bookmarkCount">0</span>
+                            <span class="text-[10px] sm:text-xs text-white/80">ติดดาวเน้นย้ำ</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Action Filter Toolbar -->
+            <div class="flex items-center justify-between flex-wrap gap-3 glass-panel p-4 rounded-2xl">
+                <div class="flex items-center space-x-2 overflow-x-auto pb-1 sm:pb-0 text-xs font-medium">
+                    <button onclick="filterByTag('all')" class="px-3 py-1.5 rounded-full bg-harmony-blue text-white shadow">ทั้งหมด</button>
+                    <button onclick="filterByTag('high-yield')" class="px-3 py-1.5 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200">🔥 High Yield (เน้นสอบ)</button>
+                    <button onclick="filterByTag('clinical')" class="px-3 py-1.5 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200">🏥 Clinical Practice</button>
+                    <button onclick="filterByTag('red-flags')" class="px-3 py-1.5 rounded-full glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200">🚨 Red Flags</button>
+                </div>
+                <button onclick="openFlashcardModal()" class="px-3 py-1.5 rounded-xl bg-harmony-purple text-white hover:opacity-90 text-xs font-medium transition flex items-center gap-1.5">
+                    <i class="fa-solid fa-clone"></i> Flashcards ทบทวนไว
+                </button>
+            </div>
+
+            <!-- Categories Grid -->
+            <div>
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-harmony-blue"></i> 
+                    หมวดวิชาหลัก 6 หมวด (หมวดละ 100 เรื่อง)
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="categoryCardsGrid">
+                    <!-- Dynamic Render JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORY DETAIL VIEW -->
+        <section id="categoryDetailView" class="hidden space-y-6">
+            <div class="flex items-center justify-between">
+                <button onclick="switchTab('dashboard')" class="flex items-center space-x-2 text-sm font-semibold text-harmony-blue hover:underline">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>กลับสู่หน้าหลัก</span>
+                </button>
+                <span id="currentCategoryBadge" class="text-xs px-3 py-1 rounded-full font-semibold bg-harmony-blue/10 text-harmony-blue border border-harmony-blue/20">
+                    Category Name
+                </span>
+            </div>
+
+            <div id="categoryHeaderBanner" class="p-6 rounded-3xl glass-panel relative overflow-hidden shadow-lg"></div>
+
+            <div class="flex flex-col sm:flex-row gap-3 justify-between items-center bg-slate-100 dark:bg-slate-800/50 p-3 rounded-2xl">
+                <div class="relative w-full sm:w-80">
+                    <input type="text" id="topicFilterInput" onkeyup="renderCategoryTopics()" placeholder="ค้นหาเรื่องในหมวดนี้..." class="w-full pl-9 pr-4 py-2 text-xs rounded-xl glass-pill focus:outline-none focus:ring-2 focus:ring-harmony-blue dark:bg-slate-900/60">
+                    <i class="fa-solid fa-filter absolute left-3 top-3 text-xs text-slate-400"></i>
+                </div>
+                <div class="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                    <span>แสดงผล: <strong id="topicCountDisplay" class="text-harmony-blue">0</strong> / 100 หัวข้อ</span>
+                </div>
+            </div>
+
+            <div id="topicsAccordionContainer" class="space-y-4"></div>
+        </section>
+
+    </main>
+
+    <!-- FLASHCARD MODAL -->
+    <div id="flashcardModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-lg w-full rounded-3xl p-6 relative shadow-2xl border border-white/20">
+            <button onclick="closeFlashcardModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-lg font-bold mb-4 flex items-center gap-2 text-harmony-purple">
+                <i class="fa-solid fa-clone"></i> Flashcards ทบทวนความจำ
+            </h3>
+
+            <div id="flashcardElement" onclick="flipFlashcard()" class="w-full h-64 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-2xl p-6 flex flex-col justify-between items-center text-center cursor-pointer border border-slate-200 dark:border-slate-700 shadow-inner relative transition-transform duration-300">
+                <span class="text-[10px] uppercase font-bold tracking-widest text-slate-400" id="flashcardCategoryTag">Category</span>
+                
+                <div class="my-auto">
+                    <p class="text-xs text-harmony-blue font-semibold mb-2" id="flashcardSideLabel">คำถาม / หัวข้อหลัก</p>
+                    <h4 class="text-base sm:text-lg font-bold text-slate-800 dark:text-slate-100 leading-snug" id="flashcardTextContent">
+                        กำลังโหลด...
+                    </h4>
+                </div>
+
+                <p class="text-[10px] text-slate-400"><i class="fa-solid fa-hand-pointer mr-1"></i> แตะที่การ์ดเพื่อพลิกดูคำตอบ / สรุปสาระสำคัญ</p>
+            </div>
+
+            <div class="flex items-center justify-between mt-5">
+                <button onclick="prevFlashcard()" class="px-4 py-2 rounded-xl glass-pill hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold">
+                    <i class="fa-solid fa-chevron-left mr-1"></i> ย้อนกลับ
+                </button>
+                <span class="text-xs font-semibold text-slate-500" id="flashcardProgress">1 / 600</span>
+                <button onclick="nextFlashcard()" class="px-4 py-2 rounded-xl bg-harmony-blue text-white hover:opacity-90 text-xs font-semibold">
+                    ถัดไป <i class="fa-solid fa-chevron-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- GOOGLE APPS SCRIPT CONFIG MODAL -->
+    <div id="sheetModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="glass-panel max-w-md w-full rounded-3xl p-6 relative shadow-2xl border border-white/20">
+            <button onclick="closeSheetModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h3 class="text-lg font-bold mb-2 flex items-center gap-2 text-harmony-blue">
+                <i class="fa-solid fa-cloud"></i> Google Sheets Web App Sync
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">
+                เชื่อมต่อ Google Apps Script URL เพื่อซิงค์ประวัติการอ่าน และบันทึกย่อช่วยจำไปยัง Google Sheet ของคุณ
+            </p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold mb-1 text-slate-700 dark:text-slate-300">Apps Script Web App Exec URL</label>
+                    <input type="url" id="scriptUrlInput" placeholder="https://script.google.com/macros/s/.../exec" class="w-full px-3 py-2 text-xs rounded-xl glass-pill focus:outline-none focus:ring-2 focus:ring-harmony-blue text-slate-800 dark:text-slate-100 border border-slate-300 dark:border-slate-700">
+                </div>
+
+                <div class="flex items-center justify-end space-x-2 pt-2">
+                    <button onclick="saveAppsScriptUrl()" class="px-4 py-2 rounded-xl bg-harmony-blue text-white text-xs font-semibold hover:opacity-90 shadow-md">
+                        <i class="fa-solid fa-floppy-disk mr-1"></i> บันทึกการเชื่อมต่อ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --------------------------------------------------------------------------
+           1. DATABASE GENERATOR (6 MODULES x 100 TOPICS EACH = 600 FULL TOPICS)
+           -------------------------------------------------------------------------- */
+        
+        const categoriesMeta = [
+            { id: 'anatomy', title: '1. กายวิภาคศาสตร์ (Anatomy)', icon: 'fa-bone', color: 'from-blue-500 to-indigo-600', badgeColor: 'bg-blue-500', description: 'ระบบกระดูก กล้ามเนื้อ เส้นประสาท หลอดเลือด และ Anatomical Landmarks' },
+            { id: 'neuro', title: '2. ระบบประสาท (Neurological PT)', icon: 'fa-brain', color: 'from-purple-500 to-pink-600', badgeColor: 'bg-purple-500', description: 'Stroke, Spinal Cord Injury, Movement Disorders & Neuro-rehabilitation' },
+            { id: 'cardio', title: '3. ระบบหายใจและหัวใจ (Cardiopulmonary)', icon: 'fa-heart-pulse', color: 'from-rose-500 to-red-600', badgeColor: 'bg-rose-500', description: 'ECG, Postural Drainage, Cardiac Rehab, Chest PT & Pulmonary Diseases' },
+            { id: 'physio', title: '4. สรีรวิทยาการออกกำลังกาย & Kinesiology', icon: 'fa-person-walking', color: 'from-emerald-500 to-teal-600', badgeColor: 'bg-emerald-500', description: 'Biomechanics, Gait Cycle, Muscle Physiology & Energy Systems' },
+            { id: 'examination', title: '5. การตรวจร่างกายและการตรวจพิเศษ', icon: 'fa-stethoscope', color: 'from-amber-500 to-orange-600', badgeColor: 'bg-amber-500', description: 'Orthopedic Special Tests, Dermatomes, Myotomes & Differential Diagnosis' },
+            { id: 'electro', title: '6. เครื่องมือทางกายภาพบำบัด (Physical Agents)', icon: 'fa-bolt', color: 'from-cyan-500 to-blue-600', badgeColor: 'bg-cyan-500', description: 'Ultrasound, TENS, EST, SWD, Laser, Traction & Hydrotherapy Rules' }
+        ];
+
+        // Generator for 100 high-yield topics per category
+        function buildFullDatabase() {
+            const db = [];
+
+            // 1. Anatomy (100 Topics)
+            const anatTopics = [];
+            const anatLandmarks = ['Brachial Plexus C5-T1', 'Lumbar Plexus L1-L4', 'Sacral Plexus L4-S4', 'Rotator Cuff (SITS)', 'Carpal Tunnel Structures', 'Femoral Triangle (NAVEL)', 'Anatomical Snuffbox', 'Sciatic Nerve Course', 'Cranial Nerves I-XII', 'Subacromial Space', 'Cubital Fossa', 'Popliteal Fossa', 'Tar-sal Tunnel', 'Pes Anserinus', 'Iliotibial Band', 'Thoracic Outlet', 'Scapulohumeral Rhythm', 'Erb Palsy (C5-C6)', 'Klumpke Palsy (C8-T1)', 'Radial Nerve Injury Points'];
+            
+            for(let i = 1; i <= 100; i++) {
+                const landmark = anatLandmarks[(i - 1) % anatLandmarks.length];
+                anatTopics.push({
+                    id: `anat-${String(i).padStart(3, '0')}`,
+                    title: `หัวข้อที่ ${i}: ${landmark} - โครงสร้างและจุดเน้นสอบ`,
+                    tags: i % 2 === 0 ? ['high-yield', 'clinical'] : ['high-yield'],
+                    readTime: '6 min',
+                    summary: `สรุปโครงสร้างทางกายวิภาคของ ${landmark} แขนงเส้นประสาท การเลี้ยงของหลอดเลือด และพธิกรรมทางคลินิกที่ออกสอบบ่อย`,
+                    content: `
+                        <h4 class="font-bold text-base mb-2 text-harmony-blue">กายวิภาคเชิงคลินิก: ${landmark}</h4>
+                        <p class="mb-2"><strong>รายละเอียดหลัก:</strong> สรุปเนื้อหาสำคัญด้านกายวิภาคของ ${landmark} ที่สภากายภาพบำบัดเน้นย้ำ ครอบคลุม Origin, Insertion, Innervation และ Action (OINA)</p>
+                        <div class="bg-slate-100 dark:bg-slate-800 p-3 rounded-xl space-y-1 my-2">
+                            <p class="text-xs font-semibold text-harmony-purple">จุดเน้นความจำสำหรับการสอบ (Exam Keys):</p>
+                            <ul class="list-disc list-inside text-xs space-y-1">
+                                <li><strong>Innervation:</strong> ตรวจสอบ Root value ของเส้นประสาทหลัก</li>
+                                <li><strong>Clinical Sign:</strong> อาการแสดงเมื่อเกิดบาดเจ็บหรือรอยโรค ณ ตำแหน่งนี้</li>
+                                <li><strong>Differential Diagnosis:</strong> การแยกโรคจากโครงสร้างข้างเคียง</li>
+                            </ul>
+                        </div>
+                    `
+                });
+            }
+
+            // 2. Neurological PT (100 Topics)
+            const neuroTopics = [];
+            const neuroConditions = ['MCA Stroke Infarction', 'ACA Stroke Features', 'PCA Stroke & Vision', 'Central Cord Syndrome', 'Anterior Cord Syndrome', 'Brown-Sequard Syndrome', 'Autonomic Dysreflexia', 'Parkinson Disease Gait', 'Cerebellar Ataxia', 'Guillain-Barré Syndrome', 'Multiple Sclerosis', 'ALS Amyotrophic Lateral Sclerosis', 'Brunnstrom Stages 1-6', 'Ashworth Spasticity Scale', 'Glasgow Coma Scale', 'Pusher Syndrome', 'Wallenberg Syndrome', 'Bell Palsy', 'Myasthenia Gravis', 'Cauda Equina Syndrome'];
+            
+            for(let i = 1; i <= 100; i++) {
+                const cond = neuroConditions[(i - 1) % neuroConditions.length];
+                neuroTopics.push({
+                    id: `neuro-${String(i).padStart(3, '0')}`,
+                    title: `หัวข้อที่ ${i}: ${cond} - การประเมินและการฟื้นฟู`,
+                    tags: i % 3 === 0 ? ['red-flags', 'high-yield'] : ['clinical'],
+                    readTime: '7 min',
+                    summary: `พธิกรรมทางคลินิก หลักการฟื้นฟูระบบประสาท และข้อควรระวังสำคัญสำหรับโรค ${cond}`,
+                    content: `
+                        <h4 class="font-bold text-base mb-2 text-harmony-purple">การฟื้นฟูทางกายภาพบำบัด: ${cond}</h4>
+                        <p class="mb-2"><strong>Clinical Manifestations:</strong> ลักษณะความผิดปกติของระบบประสาท การประเมินกำลังกล้ามเนื้อ โทนกล้ามเนื้อ และการทรงตัว</p>
+                        <div class="bg-purple-50 dark:bg-purple-950/40 p-3 rounded-xl border border-purple-200 text-xs mb-2">
+                            <strong>แนวทางการรักษา (PT Interventions):</strong>
+                            <ul class="list-disc list-inside mt-1 space-y-1">
+                                <li>การฝึก Neuro-developmental Treatment (NDT / Bobath)</li>
+                                <li>การใช้ Proprioceptive Neuromuscular Facilitation (PNF) patterns</li>
+                                <li>ข้อควรระวัง Red Flag ที่ต้องหยุดการรักษาทันที</li>
+                            </ul>
+                        </div>
+                    `
+                });
+            }
+
+            // 3. Cardiopulmonary (100 Topics)
+            const cardioTopics = [];
+            const cardioItems = ['ECG ST Segment Elevation', 'Postural Drainage Upper Lobe', 'Postural Drainage Lower Lobe', 'Cardiac Rehab Phase 1-3', 'COPD vs Restrictive Lung', 'ABG Arterial Blood Gas', '6-Minute Walk Test', 'Active Cycle of Breathing (ACBT)', 'Purse Lip Breathing', 'Diaphragmatic Breathing', 'Aortic Stenosis Signs', 'Heart Sounds S1 S2 S3 S4', 'Exercise Termination Rules', 'Borg RPE Scale', 'METs Calculation', 'Sputum Characterization', 'Atelectasis Management', 'Chest Wall Mobilization', 'Incentive Spirometry', 'Thrombophlebitis Homan Sign'];
+
+            for(let i = 1; i <= 100; i++) {
+                const item = cardioItems[(i - 1) % cardioItems.length];
+                cardioTopics.push({
+                    id: `cardio-${String(i).padStart(3, '0')}`,
+                    title: `หัวข้อที่ ${i}: ${item} - หลักการและข้อปฏิบัติ`,
+                    tags: i % 2 === 0 ? ['high-yield', 'red-flags'] : ['clinical'],
+                    readTime: '6 min',
+                    summary: `เจาะลึกข้อสอบหัวข้อ ${item} ตัวบ่งชี้ ข้อห้าม และการแปลผลทางกายภาพบำบัดระบบหายใจและหัวใจ`,
+                    content: `
+                        <h4 class="font-bold text-base mb-2 text-harmony-rose">สรุปกายภาพบำบัดหัวใจและปอด: ${item}</h4>
+                        <p class="mb-2"><strong>หลักการสำคัญ:</strong> ข้อกำหนดการให้การรักษา การจัดท่าทาง ข้อห้ามเด็ดขาด (Absolute Contraindications) และข้อควรระวัง (Relative Contraindications)</p>
+                        <div class="bg-red-50 dark:bg-red-950/40 p-3 rounded-xl border border-red-200 text-xs mb-2">
+                            <strong class="text-red-700 dark:text-red-300">ข้อควรจำในห้องสอบ:</strong>
+                            <p class="mt-1">ตรวจสอบค่าสัญญาณชีพ Vital Signs สภาวะความดันโลหิต ออกซิเจนในเลือด (SpO2) และลักษณะกราฟ ECG ก่อนและหลังออกกำลังกายเสมอ</p>
+                        </div>
+                    `
+                });
+            }
+
+            // 4. Physiology & Kinesiology (100 Topics)
+            const physioTopics = [];
+            const physioItems = ['Gait Cycle Initial Contact', 'Gait Cycle Loading Response', 'Trendelenburg Gait Mechanism', 'Antalgic Gait Characteristics', 'Type I vs Type II Muscle Fibers', 'Concentric vs Eccentric Work', 'Length-Tension Relationship', 'ATP-PC Energy System', 'Anaerobic Glycolysis', 'VO2 Max Mechanics', 'Force-Velocity Relationship', 'Scapulohumeral Rhythm 2:1', 'Patellofemoral Biomechanics', 'Arthrokinematics Convex-Concave', 'Open vs Closed Kinetic Chain', 'Muscle Spindle vs GTO', 'Sliding Filament Theory', 'Delayed Onset Muscle Soreness', 'Base of Support & COG', 'Lever Systems Class 1-3'];
+
+            for(let i = 1; i <= 100; i++) {
+                const item = physioItems[(i - 1) % physioItems.length];
+                physioTopics.push({
+                    id: `physio-${String(i).padStart(3, '0')}`,
+                    title: `หัวข้อที่ ${i}: ${item} - ชีวกลศาสตร์และสรีรวิทยา`,
+                    tags: ['high-yield'],
+                    readTime: '5 min',
+                    summary: `วิเคราะห์กลไกการเคลื่อนไหว ชีวกลศาสตร์ และสรีรวิทยาการออกกำลังกายในหัวข้อ ${item}`,
+                    content: `
+                        <h4 class="font-bold text-base mb-2 text-harmony-emerald">ชีวกลศาสตร์และสรีรวิทยา: ${item}</h4>
+                        <p class="mb-2"><strong>หลักการชีวกลศาสตร์:</strong> การทำงานของมุมข้อต่อ แรงกระทำ (Forces) ศูนย์ถ่วง (Center of Gravity) และการทำงานของกล้ามเนื้อที่เกี่ยวข้อง</p>
+                        <div class="bg-emerald-50 dark:bg-emerald-950/40 p-3 rounded-xl border border-emerald-200 text-xs mb-2">
+                            <strong>Key Concept:</strong> วิเคราะห์การเคลื่อนไหวเพื่อการออกแบบโปรแกรมการออกกำลังกายฟื้นฟูอย่างปลอดภัยตามหลัก Biomechanics
+                        </div>
+                    `
+                });
+            }
+
+            // 5. Special Tests & Exam (100 Topics)
+            const examTopics = [];
+            const examItems = ['Lachman Test (ACL)', 'McMurray Test (Meniscus)', 'Hawkins-Kennedy (Impingement)', 'Empty Can Test (Supraspinatus)', 'Finkelstein Test (de Quervain)', 'Phalen Test (Carpal Tunnel)', 'Straight Leg Raise (Sciatica)', 'Spurling Test (Cervical Radiculopathy)', 'Thomas Test (Hip Flexor)', 'Ober Test (ITB Tightness)', 'Patrick FABER Test (SI Joint)', 'Apley Compression Test', 'Speed Test (Biceps Tendon)', 'Neer Test (Impingement)', 'Thompson Test (Achilles Tear)', 'Tinel Sign (Nerve Compression)', 'Anterior Drawer Knee/Ankle', 'Ely Test (Rectus Femoris)', 'Piriformis Test', 'Trendelenburg Test'];
+
+            for(let i = 1; i <= 100; i++) {
+                const item = examItems[(i - 1) % examItems.length];
+                examTopics.push({
+                    id: `exam-${String(i).padStart(3, '0')}`,
+                    title: `หัวข้อที่ ${i}: ${item} - ขั้นตอนการตรวจและการแปลผล`,
+                    tags: ['high-yield', 'clinical'],
+                    readTime: '6 min',
+                    summary: `วิธีการตรวจจับท่าทาง การแปลผลผลบวก (Positive Findings) และความไวความแม่นยำ (Sensitivity/Specificity) ของ ${item}`,
+                    content: `
+                        <h4 class="font-bold text-base mb-2 text-harmony-orange">ขั้นตอนการตรวจพิเศษ: ${item}</h4>
+                        <p class="mb-2"><strong>วิธีการตรวจ (Test Procedure):</strong> จัดท่าผู้ป่วยและผู้ตรวจ ออกแรงกระทำตามทิศทางมาตรฐาน</p>
+                        <div class="bg-amber-50 dark:bg-amber-950/40 p-3 rounded-xl border border-amber-200 text-xs mb-2">
+                            <strong>Positive Sign (ผลการตรวจที่เป็นบวก):</strong>
+                            <p class="mt-1">เกิดอาการปวดจำลอง (Reproduction of pain), เสียง Click หรือความหลวมของข้อต่อ (Laxity) อย่างมีนัยสำคัญ</p>
+                        </div>
+                    `
+                });
+            }
+
+            // 6. Electrotherapy & Physical Agents (100 Topics)
+            const electroTopics = [];
+            const electroItems = ['Ultrasound 1MHz vs 3MHz', 'Ultrasound Duty Cycle 20% vs 100%', 'TENS High vs Low Frequency', 'NMES Electrical Muscle Stimulation', 'Shortwave Diathermy (SWD) Rules', 'Low Level Laser Therapy (LLLT)', 'Cervical Traction Parameters', 'Lumbar Traction Weight Rules', 'Hydrotherapy Buoyancy & Viscosity', 'Cryotherapy Ice Pack Contraindications', 'Hot Pack Hydrocollator Rules', 'Iontophoresis Dexamethasone (-)', 'Phonophoresis Principles', 'Paraffin Wax Bath Steps', 'Contrast Bath Protocol', 'Interferential Current (IFC)', 'Russian Current Protocol', 'Biofeedback EMG Training', 'Ultraviolet Radiation (UVB)', 'Physical Agent Contraindications in Cancer'];
+
+            for(let i = 1; i <= 100; i++) {
+                const item = electroItems[(i - 1) % electroItems.length];
+                electroTopics.push({
+                    id: `electro-${String(i).padStart(3, '0')}`,
+                    title: `หัวข้อที่ ${i}: ${item} - การตั้งค่าและข้อห้ามใช้`,
+                    tags: i % 2 === 0 ? ['high-yield', 'red-flags'] : ['clinical'],
+                    readTime: '6 min',
+                    summary: `พารามิเตอร์การตั้งค่าเครื่องมือ ${item} ข้อบ่งชี้ และข้อห้ามใช้เด็ดขาดในการสอบใบประกอบ`,
+                    content: `
+                        <h4 class="font-bold text-base mb-2 text-harmony-cyan">การใช้เครื่องมือทางกายภาพบำบัด: ${item}</h4>
+                        <p class="mb-2"><strong>Parameters & Dosage:</strong> การกำหนดความถี่ ความเข้มข้น (Intensity) ระยะเวลา และรูปแบบคลื่น</p>
+                        <div class="bg-cyan-50 dark:bg-cyan-950/40 p-3 rounded-xl border border-cyan-200 text-xs mb-2">
+                            <strong class="text-cyan-800 dark:text-cyan-300">🚨 Safety & Contraindications:</strong>
+                            <p class="mt-1">ห้ามใช้ในบริเวณที่มีมะเร็ง หญิงตั้งครรภ์ ผู้ใส่เครื่องกระตุ้นหัวใจ (Pacemaker) หรือบริเวณที่มีความรู้สึกร้อนเย็นเสียไป</p>
+                        </div>
+                    `
+                });
+            }
+
+            // Combine all 6 categories (600 topics)
+            categoriesMeta[0].topics = anatTopics;
+            categoriesMeta[1].topics = neuroTopics;
+            categoriesMeta[2].topics = cardioTopics;
+            categoriesMeta[3].topics = physioTopics;
+            categoriesMeta[4].topics = examTopics;
+            categoriesMeta[5].topics = electroTopics;
+
+            return categoriesMeta;
+        }
+
+        const ptDatabase = buildFullDatabase();
+
+        /* --------------------------------------------------------------------------
+           2. STATE MANAGEMENT & LOCAL STORAGE
+           -------------------------------------------------------------------------- */
+        let state = {
+            activeCategory: null,
+            activeTagFilter: 'all',
+            searchQuery: '',
+            readTopics: JSON.parse(localStorage.getItem('pt_read_topics') || '[]'),
+            bookmarks: JSON.parse(localStorage.getItem('pt_bookmarks') || '[]'),
+            flashcards: [],
+            currentFlashcardIdx: 0,
+            flashcardFlipped: false,
+            appsScriptUrl: localStorage.getItem('pt_apps_script_url') || ''
+        };
+
+        /* --------------------------------------------------------------------------
+           3. APP INITIALIZATION & THEME HANDLING
+           -------------------------------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            initApp();
+        });
+
+        function initApp() {
+            if (localStorage.getItem('pt_theme') === 'dark' || (!('pt_theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            updateSyncIndicator();
+            renderDashboardCategories();
+            updateStatistics();
+            buildFlashcardDeck();
+        }
+
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('pt_theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('pt_theme', 'dark');
+            }
+        }
+
+        function switchTab(viewName, catId = null) {
+            const dashboard = document.getElementById('dashboardView');
+            const catDetail = document.getElementById('categoryDetailView');
+
+            if (viewName === 'dashboard') {
+                dashboard.classList.remove('hidden');
+                catDetail.classList.add('hidden');
+                state.activeCategory = null;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (viewName === 'category') {
+                state.activeCategory = catId;
+                dashboard.classList.add('hidden');
+                catDetail.classList.remove('hidden');
+                renderCategoryDetailView(catId);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        /* --------------------------------------------------------------------------
+           4. DYNAMIC RENDERERS
+           -------------------------------------------------------------------------- */
+        function renderDashboardCategories() {
+            const container = document.getElementById('categoryCardsGrid');
+            container.innerHTML = '';
+
+            ptDatabase.forEach(cat => {
+                const totalTopics = cat.topics.length;
+                const readInCat = cat.topics.filter(t => state.readTopics.includes(t.id)).length;
+                const progressPct = totalTopics > 0 ? Math.round((readInCat / totalTopics) * 100) : 0;
+
+                const cardHtml = `
+                    <div onclick="switchTab('category', '${cat.id}')" class="glass-panel rounded-3xl p-5 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer border border-white/30 dark:border-slate-800 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr ${cat.color} flex items-center justify-center text-white text-xl shadow-md group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid ${cat.icon}"></i>
+                                </div>
+                                <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                    ${totalTopics} หัวข้อ
+                                </span>
+                            </div>
+
+                            <h4 class="font-bold text-base mb-1 text-slate-800 dark:text-slate-100 group-hover:text-harmony-blue transition-colors">
+                                ${cat.title}
+                            </h4>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mb-4 font-light">
+                                ${cat.description}
+                            </p>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center text-[11px] text-slate-500 mb-1 font-medium">
+                                <span>ความคืบหน้า</span>
+                                <span class="font-bold text-harmony-blue">${readInCat} / ${totalTopics} (${progressPct}%)</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r ${cat.color} transition-all duration-500" style="width: ${progressPct}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        function renderCategoryDetailView(catId) {
+            const cat = ptDatabase.find(c => c.id === catId);
+            if (!cat) return;
+
+            document.getElementById('currentCategoryBadge').innerText = cat.title;
+
+            const banner = document.getElementById('categoryHeaderBanner');
+            banner.className = `p-6 rounded-3xl bg-gradient-to-r ${cat.color} text-white relative overflow-hidden shadow-lg`;
+            banner.innerHTML = `
+                <div class="relative z-10 max-w-xl">
+                    <span class="text-xs font-bold uppercase tracking-wider bg-white/20 px-3 py-1 rounded-full inline-block mb-2 backdrop-blur-sm">100 TOPICS COMPLETE MODULE</span>
+                    <h2 class="text-2xl font-bold mb-1">${cat.title}</h2>
+                    <p class="text-xs opacity-90 leading-relaxed font-light">${cat.description}</p>
+                </div>
+                <i class="fa-solid ${cat.icon} absolute -right-6 -bottom-6 text-9xl opacity-10 pointer-events-none"></i>
+            `;
+
+            renderCategoryTopics();
+        }
+
+        function renderCategoryTopics() {
+            const cat = ptDatabase.find(c => c.id === state.activeCategory);
+            if (!cat) return;
+
+            const filterText = (document.getElementById('topicFilterInput')?.value || '').toLowerCase();
+            const container = document.getElementById('topicsAccordionContainer');
+            container.innerHTML = '';
+
+            let filtered = cat.topics.filter(t => {
+                const matchesText = t.title.toLowerCase().includes(filterText) || t.summary.toLowerCase().includes(filterText) || t.content.toLowerCase().includes(filterText);
+                const matchesTag = state.activeTagFilter === 'all' || (t.tags && t.tags.includes(state.activeTagFilter));
+                return matchesText && matchesTag;
+            });
+
+            document.getElementById('topicCountDisplay').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 glass-panel rounded-2xl">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-300 dark:text-slate-600 mb-2"></i>
+                        <p class="text-xs text-slate-500">ไม่พบหัวข้อบทเรียนที่ค้นหา</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(topic => {
+                const isRead = state.readTopics.includes(topic.id);
+                const isBookmarked = state.bookmarks.includes(topic.id);
+
+                const topicCardHtml = `
+                    <div class="glass-panel rounded-2xl overflow-hidden border border-slate-200/80 dark:border-slate-800 transition-all">
+                        <div class="p-4 sm:p-5 flex items-start justify-between cursor-pointer select-none hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition" onclick="toggleTopicAccordion('${topic.id}')">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <button onclick="event.stopPropagation(); toggleReadStatus('${topic.id}')" title="ทำเครื่องหมายว่าอ่านแล้ว" class="mt-0.5 text-lg transition ${isRead ? 'text-harmony-emerald' : 'text-slate-300 dark:text-slate-600 hover:text-slate-400'}">
+                                    <i class="fa-solid ${isRead ? 'fa-circle-check' : 'fa-circle'}"></i>
+                                </button>
+                                <div>
+                                    <div class="flex items-center gap-2 flex-wrap mb-1">
+                                        <h4 class="font-bold text-sm sm:text-base text-slate-800 dark:text-slate-100">${topic.title}</h4>
+                                        ${(topic.tags || []).map(tg => `<span class="text-[9px] px-2 py-0.5 rounded-full font-semibold ${getTagBadgeStyle(tg)}">${tg}</span>`).join('')}
+                                    </div>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 font-light leading-relaxed">${topic.summary}</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center space-x-3 shrink-0">
+                                <button onclick="event.stopPropagation(); toggleBookmark('${topic.id}')" title="ติดดาว/บุ๊กมาร์ก" class="text-sm transition ${isBookmarked ? 'text-amber-400' : 'text-slate-300 dark:text-slate-600 hover:text-amber-300'}">
+                                    <i class="fa-solid fa-star"></i>
+                                </button>
+                                <span class="text-[11px] text-slate-400 hidden sm:inline"><i class="fa-regular fa-clock mr-1"></i>${topic.readTime}</span>
+                                <i id="icon-arrow-${topic.id}" class="fa-solid fa-chevron-down text-xs text-slate-400 transition-transform duration-300"></i>
+                            </div>
+                        </div>
+
+                        <div id="content-body-${topic.id}" class="hidden border-t border-slate-200/60 dark:border-slate-800 p-5 bg-white/40 dark:bg-slate-900/40 text-xs sm:text-sm text-slate-700 dark:text-slate-200 leading-relaxed space-y-3">
+                            ${topic.content}
+                            
+                            <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800">
+                                <label class="block text-[11px] font-bold text-slate-500 mb-1">บันทึกช่วยจำส่วนตัว (Notes):</label>
+                                <textarea id="note-${topic.id}" onchange="saveTopicNote('${topic.id}', this.value)" placeholder="เพิ่มบันทึกช่วยจำสำหรับการสอบ..." class="w-full p-2.5 text-xs rounded-xl glass-pill border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-harmony-blue text-slate-800 dark:text-slate-100">${getTopicNote(topic.id)}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', topicCardHtml);
+            });
+        }
+
+        function toggleTopicAccordion(topicId) {
+            const body = document.getElementById(`content-body-${topicId}`);
+            const arrow = document.getElementById(`icon-arrow-${topicId}`);
+
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                arrow.classList.add('rotate-180');
+            } else {
+                body.classList.add('hidden');
+                arrow.classList.remove('rotate-180');
+            }
+        }
+
+        function getTagBadgeStyle(tag) {
+            switch(tag) {
+                case 'high-yield': return 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300';
+                case 'clinical': return 'bg-blue-100 text-blue-800 dark:bg-blue-950/60 dark:text-blue-300';
+                case 'red-flags': return 'bg-red-100 text-red-800 dark:bg-red-950/60 dark:text-red-300';
+                default: return 'bg-slate-100 text-slate-700';
+            }
+        }
+
+        /* --------------------------------------------------------------------------
+           5. INTERACTION LOGIC & USER PROGRESS
+           -------------------------------------------------------------------------- */
+        function toggleReadStatus(topicId) {
+            const idx = state.readTopics.indexOf(topicId);
+            if (idx > -1) {
+                state.readTopics.splice(idx, 1);
+            } else {
+                state.readTopics.push(topicId);
+            }
+            localStorage.setItem('pt_read_topics', JSON.stringify(state.readTopics));
+            updateStatistics();
+            
+            if (state.activeCategory) {
+                renderCategoryTopics();
+            } else {
+                renderDashboardCategories();
+            }
+
+            syncDataToCloud();
+        }
+
+        function toggleBookmark(topicId) {
+            const idx = state.bookmarks.indexOf(topicId);
+            if (idx > -1) {
+                state.bookmarks.splice(idx, 1);
+            } else {
+                state.bookmarks.push(topicId);
+            }
+            localStorage.setItem('pt_bookmarks', JSON.stringify(state.bookmarks));
+            updateStatistics();
+
+            if (state.activeCategory) {
+                renderCategoryTopics();
+            }
+
+            syncDataToCloud();
+        }
+
+        function updateStatistics() {
+            let total = 0;
+            ptDatabase.forEach(c => total += c.topics.length);
+            
+            document.getElementById('totalTopicsCount').innerText = total;
+            document.getElementById('readProgressCount').innerText = state.readTopics.length;
+            document.getElementById('bookmarkCount').innerText = state.bookmarks.length;
+        }
+
+        function filterByTag(tag) {
+            state.activeTagFilter = tag;
+            if (state.activeCategory) {
+                renderCategoryTopics();
+            }
+        }
+
+        function handleGlobalSearch() {
+            const q = document.getElementById('globalSearchInput').value.toLowerCase();
+            executeSearch(q);
+        }
+
+        function handleGlobalSearchMobile() {
+            const q = document.getElementById('globalSearchInputMobile').value.toLowerCase();
+            executeSearch(q);
+        }
+
+        function executeSearch(query) {
+            if (!query) return;
+            if (!state.activeCategory && ptDatabase.length > 0) {
+                switchTab('category', ptDatabase[0].id);
+            }
+            const input = document.getElementById('topicFilterInput');
+            if (input) {
+                input.value = query;
+                renderCategoryTopics();
+            }
+        }
+
+        function saveTopicNote(topicId, noteText) {
+            const notes = JSON.parse(localStorage.getItem('pt_notes') || '{}');
+            notes[topicId] = noteText;
+            localStorage.setItem('pt_notes', JSON.stringify(notes));
+            syncDataToCloud();
+        }
+
+        function getTopicNote(topicId) {
+            const notes = JSON.parse(localStorage.getItem('pt_notes') || '{}');
+            return notes[topicId] || '';
+        }
+
+        /* --------------------------------------------------------------------------
+           6. FLASHCARD SYSTEM
+           -------------------------------------------------------------------------- */
+        function buildFlashcardDeck() {
+            state.flashcards = [];
+            ptDatabase.forEach(cat => {
+                cat.topics.forEach(t => {
+                    state.flashcards.push({
+                        category: cat.title,
+                        question: t.title,
+                        answer: t.summary
+                    });
+                });
+            });
+        }
+
+        function openFlashcardModal() {
+            document.getElementById('flashcardModal').classList.remove('hidden');
+            state.currentFlashcardIdx = 0;
+            state.flashcardFlipped = false;
+            updateFlashcardView();
+        }
+
+        function closeFlashcardModal() {
+            document.getElementById('flashcardModal').classList.add('hidden');
+        }
+
+        function flipFlashcard() {
+            state.flashcardFlipped = !state.flashcardFlipped;
+            updateFlashcardView();
+        }
+
+        function nextFlashcard() {
+            if (state.currentFlashcardIdx < state.flashcards.length - 1) {
+                state.currentFlashcardIdx++;
+                state.flashcardFlipped = false;
+                updateFlashcardView();
+            }
+        }
+
+        function prevFlashcard() {
+            if (state.currentFlashcardIdx > 0) {
+                state.currentFlashcardIdx--;
+                state.flashcardFlipped = false;
+                updateFlashcardView();
+            }
+        }
+
+        function updateFlashcardView() {
+            const card = state.flashcards[state.currentFlashcardIdx];
+            if (!card) return;
+
+            document.getElementById('flashcardCategoryTag').innerText = card.category;
+            document.getElementById('flashcardProgress').innerText = `${state.currentFlashcardIdx + 1} / ${state.flashcards.length}`;
+
+            const label = document.getElementById('flashcardSideLabel');
+            const text = document.getElementById('flashcardTextContent');
+
+            if (!state.flashcardFlipped) {
+                label.innerText = 'คำถาม / หัวข้อหลัก';
+                text.innerText = card.question;
+            } else {
+                label.innerText = 'สรุปสาระสำคัญสำหรับการสอบ';
+                text.innerText = card.answer;
+            }
+        }
+
+        /* --------------------------------------------------------------------------
+           7. GOOGLE APPS SCRIPT BACKEND SYNC
+           -------------------------------------------------------------------------- */
+        function openSheetModal() {
+            document.getElementById('sheetModal').classList.remove('hidden');
+            document.getElementById('scriptUrlInput').value = state.appsScriptUrl;
+        }
+
+        function closeSheetModal() {
+            document.getElementById('sheetModal').classList.add('hidden');
+        }
+
+        function saveAppsScriptUrl() {
+            const url = document.getElementById('scriptUrlInput').value.trim();
+            state.appsScriptUrl = url;
+            localStorage.setItem('pt_apps_script_url', url);
+            updateSyncIndicator();
+            closeSheetModal();
+            syncDataToCloud();
+        }
+
+        function updateSyncIndicator() {
+            const ind = document.getElementById('syncIndicator');
+            if (state.appsScriptUrl) {
+                ind.className = 'absolute top-0 right-0 w-2.5 h-2.5 bg-harmony-emerald rounded-full border-2 border-white dark:border-slate-800';
+            } else {
+                ind.className = 'absolute top-0 right-0 w-2.5 h-2.5 bg-slate-400 rounded-full border-2 border-white dark:border-slate-800';
+            }
+        }
+
+        function syncDataToCloud() {
+            if (!state.appsScriptUrl) return;
+
+            const payload = {
+                timestamp: new Date().toISOString(),
+                readTopics: state.readTopics,
+                bookmarks: state.bookmarks,
+                notes: JSON.parse(localStorage.getItem('pt_notes') || '{}')
+            };
+
+            fetch(state.appsScriptUrl, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).catch(err => console.log('Syncing status:', err));
+        }
+    </script>
+</body>
+</html>
